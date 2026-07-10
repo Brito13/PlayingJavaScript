@@ -1,6 +1,4 @@
 
-
-
     const lista = ['Zelda', 'Mario', 'Metroid', 'Donkey Kong'];
   
           
