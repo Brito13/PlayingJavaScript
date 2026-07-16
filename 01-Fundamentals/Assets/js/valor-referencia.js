@@ -19,3 +19,20 @@ let peter = {nombre: 'peter'};
 let tony = cambiarNombre({...peter})
 
 console.log({peter,tony});
+
+
+
+const frutas = ['chinola','limon','aguacate']
+
+
+console.time('slice');
+const otrasFrutas = [...frutas]
+console.timeEnd('slice');
+
+console.time('spread');
+const otrasFrutas2 = [...frutas]
+console.timeEnd('spread');
+
+frutas.push('Mango');
+
+console.table({otrasFrutas,otrasFrutas2});
