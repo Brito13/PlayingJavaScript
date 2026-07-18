@@ -5,9 +5,9 @@ let dia = hoy.getDay();
 // console.log(dia);
 
 
-const diaSemana = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado']
-console.table(diaSemana)
-console.log(`Hoy es ${diaSemana[dia]}`);
+const diaSemana = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+console.table(diaSemana);
+console.log(`Hoy es -> ${diaSemana[dia]}`);
 
 
 
