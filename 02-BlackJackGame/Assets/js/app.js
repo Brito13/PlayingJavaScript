@@ -21,33 +21,35 @@ function crearDesk(){
   return deck;
 }
 
-
 const getCard = () => {
-    if (deck.length() === 0) {
-        const carta = deck.pop();
+    let carta;
+    if (deck.length != 0) {
+        carta = deck.pop();
+        console.log(carta);
+    }else{
+        console.log('Ya no quedan mas cartas');
     }
     return carta;
 }
 
 //Continuar
-function valorCard() {
-
-
+function valueCard(carta) {
+  let value = carta.substring(0, carta.length -1);
+    if (isNaN(value)) {
+        value = (value === 'A') ? 11 
+        : (value === 'K') ? 10 
+        : (value === 'J') ? 10 
+        : (value === 'Q') ? 10
+        : console.warn('Este valor no es valido');
+    }else{
+        value = value * 1;
+    }
+    return value;
 }
-
-console.log(crearDesk());
-
-console.warn('deck');
-console.log(deck);
-
-console.log(getCard());
-
-console.log(deck);
-
-console.log(getCard());
-
-console.log(deck);
-
-
-
-
+// crearDesk();
+// console.log(deck);
+// console.log(getCard());
+// console.log(deck)
+crearDesk();
+const valor = valueCard(getCard())
+console.log(valor);
