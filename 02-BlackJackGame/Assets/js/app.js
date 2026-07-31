@@ -5,18 +5,21 @@ let especiales = ['A','J','K','Q']
 
 function crearDesk(){
 
+    //crear cartas normales
    for(let i = 2; i < 10;i++){
         for(let cartas of tipos){
             deck.push(i + cartas);
         }
    }
 
+   //Crear cartas especiales
    for(let tipo of tipos ){
     for(let especial of especiales){
         deck.push(especial + tipo);
     }
    }
 
+   //mezclar las cartas
   deck = _.shuffle(deck);
   return deck;
 }
@@ -39,7 +42,7 @@ function valueCard(carta) {
         value = (value === 'A') ? 11 
         : (value === 'K') ? 10 
         : (value === 'J') ? 10 
-        : (value === 'Q') ? 10
+        : (value === 'Q') ? 1
         : console.warn('Este valor no es valido');
     }else{
         value = value * 1;
