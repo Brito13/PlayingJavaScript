@@ -3,6 +3,23 @@ let deck = [];
 let tipos = ['C','D','H','S'];
 let especiales = ['A','J','K','Q']
 
+let ptsJugador = 0;
+let ptsComputadora = 0;
+
+
+//referencia a botones 
+const btnNuevoJuego = document.querySelector('#nuevo-juego');
+const btnPedir = document.querySelector('#pedir-cartas');
+const btnTerminar = document.querySelector('#Terminar');
+
+
+// const ptsJugadorHtml = document.querySelector('.pts-jugador');
+// const ptsComputadoraHtml = document.querySelector('.pts-computadora');
+
+let ptsHtml = document.querySelectorAll('small');
+
+const divCartasJugador = document.querySelector('#cartas-jugador');
+
 function crearDesk(){
 
     //crear cartas normales
@@ -28,7 +45,6 @@ const getCard = () => {
     let carta;
     if (deck.length != 0) {
         carta = deck.pop();
-        console.log(carta);
     }else{
         console.log('Ya no quedan mas cartas');
     }
@@ -42,7 +58,7 @@ function valueCard(carta) {
         value = (value === 'A') ? 11 
         : (value === 'K') ? 10 
         : (value === 'J') ? 10 
-        : (value === 'Q') ? 1
+        : (value === 'Q') ? 10
         : console.warn('Este valor no es valido');
     }else{
         value = value * 1;
@@ -53,6 +69,25 @@ function valueCard(carta) {
 // console.log(deck);
 // console.log(getCard());
 // console.log(deck)
-crearDesk();
-const valor = valueCard(getCard())
-console.log(valor);
+
+
+
+btnPedir.addEventListener('click', () =>{
+    crearDesk();
+    const carta = getCard();    
+    ptsJugador += valueCard(carta);
+    ptsHtml[0].innerHTML = ptsJugador;
+
+    const imgCarta = document.createElement('img');
+    imgCarta.classList.add('cartas');
+    imgCarta.src = `/Assets/cartas/${carta}.png`;
+
+    divCartasJugador.append(imgCarta);
+
+    console.log(carta + ' ' + ptsJugador);
+});
+
+
+btnNuevoJuego.addEventListener('click', function(){
+    crearDesk();
+});
