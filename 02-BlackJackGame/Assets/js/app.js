@@ -19,6 +19,7 @@ const btnTerminar = document.querySelector('#Terminar');
 let ptsHtml = document.querySelectorAll('small');
 
 const divCartasJugador = document.querySelector('#cartas-jugador');
+const divCartasComputadora = document.querySelector('#cartas-cpu');
 
 function crearDesk(){
 
@@ -70,7 +71,45 @@ function valueCard(carta) {
 // console.log(getCard());
 // console.log(deck)
 
+function gameNotification(mensaje,tipo){
+     
+   
+    if(tipo === 'error'){
+    Toastify({
+            text: mensaje,
+            duration: 3000,
+            style: {
+                background: "#FF0000",
+                color: "#fff"
+            }
+        }).showToast();
+    }else if(tipo === 'success'){
+        Toastify({
+            text: mensaje,
+            duration: 3000,
+            style: {
+                background: "#008000",
+                color: "#fff"
+            }
+        }).showToast();
+    }
 
+   
+}
+
+function turnoComputadora(ptsMinimos){
+    do {
+        const carta = getCard();
+        ptsComputadora += valueCard(carta);
+        ptsHtml[1].innerHTML = ptsComputadora;
+
+        const imgCarta = document.createElement('img');
+        imgCarta.classList.add('cartas');
+        imgCarta.src = `/Assets/cartas/${carta}.png`;
+        divCartasComputadora.append(imgCarta);
+    } while (ptsComputadora < ptsMinimos && ptsMinimos <= 21);
+    gameNotification('La computadora ha ganado','success');
+}
 
 btnPedir.addEventListener('click', () =>{
     crearDesk();
@@ -83,11 +122,31 @@ btnPedir.addEventListener('click', () =>{
     imgCarta.src = `/Assets/cartas/${carta}.png`;
 
     divCartasJugador.append(imgCarta);
+    gameNotification();
 
-    console.log(carta + ' ' + ptsJugador);
+    if (ptsJugador > 21) {
+        console.warn('Lo siento mucho, perdiste');
+        btnPedir.disabled = true;
+        btnTerminar.disabled = true;
+        turnoComputadora(ptsJugador);
+        gameNotification('Lo siento mucho, perdiste','error');
+    }else if (ptsJugador === 21) {
+        btnPedir.disabled = true;
+        btnTerminar.disabled = true;
+        turnoComputadora(ptsJugador);
+        gameNotification('Felicidades, Ganaste','success');
+    }
 });
 
+// crearDesk();
+// turnoComputadora(21);
 
-btnNuevoJuego.addEventListener('click', function(){
-    crearDesk();
-});
+
+
+btnTerminar.addEventListener('click', () => {
+    btnPedir.disabled = true;
+    btnTerminar.disabled = true;
+    turnoComputadora(ptsJugador);
+    gameNotification();
+}
+);
