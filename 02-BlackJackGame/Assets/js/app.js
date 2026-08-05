@@ -92,6 +92,15 @@ function gameNotification(mensaje,tipo){
                 color: "#fff"
             }
         }).showToast();
+    }else if (tipo === 'info'){
+        Toastify({
+            text: mensaje,
+            duration: 3000,
+            style: {
+                background: "#f7de00",
+                color: "#fff"
+            }
+        }).showToast();
     }
 
    
@@ -108,8 +117,28 @@ function turnoComputadora(ptsMinimos){
         imgCarta.src = `/Assets/cartas/${carta}.png`;
         divCartasComputadora.append(imgCarta);
     } while (ptsComputadora < ptsMinimos && ptsMinimos <= 21);
-    gameNotification('La computadora ha ganado','success');
+
+    setTimeout(() => {
+    if(ptsComputadora === ptsMinimos){
+        gameNotification('Nadie gana','info');
+    }
+    else if (ptsMinimos > 21) {
+        gameNotification('Computadora Gana','success');
+    }
+    else if (ptsComputadora > 21) {
+        gameNotification('Jugador Gana','success');
+    }
+    else if (ptsComputadora === 21) {
+        gameNotification('Computadora Gana','success');
+    }else if (ptsMinimos < ptsComputadora && ptsComputadora < 21) {
+        gameNotification('Jugador  Gana','success');
+    }
+    else if (ptsMinimos > ptsComputadora && ptsComputadora < 21) {
+        gameNotification('Computadora Gana','success');
+    }
+}, 1000);
 }
+
 
 btnPedir.addEventListener('click', () =>{
     crearDesk();
@@ -122,20 +151,18 @@ btnPedir.addEventListener('click', () =>{
     imgCarta.src = `/Assets/cartas/${carta}.png`;
 
     divCartasJugador.append(imgCarta);
-    gameNotification();
 
     if (ptsJugador > 21) {
-        console.warn('Lo siento mucho, perdiste');
-        btnPedir.disabled = true;
-        btnTerminar.disabled = true;
-        turnoComputadora(ptsJugador);
         gameNotification('Lo siento mucho, perdiste','error');
-    }else if (ptsJugador === 21) {
         btnPedir.disabled = true;
         btnTerminar.disabled = true;
         turnoComputadora(ptsJugador);
+    } else if (ptsJugador === 21) {
         gameNotification('Felicidades, Ganaste','success');
-    }
+        btnPedir.disabled = true;
+        btnTerminar.disabled = true;
+        turnoComputadora(ptsJugador);
+    };
 });
 
 // crearDesk();
@@ -144,9 +171,24 @@ btnPedir.addEventListener('click', () =>{
 
 
 btnTerminar.addEventListener('click', () => {
-    btnPedir.disabled = true;
-    btnTerminar.disabled = true;
-    turnoComputadora(ptsJugador);
-    gameNotification();
-}
-);
+    if (ptsJugador === 0) {
+        gameNotification('No puedes terminar sin pedir cartas','error');
+        return;
+    }else{
+        btnPedir.disabled = true;
+        btnTerminar.disabled = true;
+        turnoComputadora(ptsJugador);
+    }
+}); 
+
+btnNuevoJuego.addEventListener('click', () => {
+    deck = crearDesk();
+    ptsJugador = 0;
+    ptsComputadora = 0;
+    ptsHtml[0].innerHTML = ptsJugador;
+    ptsHtml[1].innerHTML = ptsComputadora;
+    divCartasJugador.innerHTML = '';
+    divCartasComputadora.innerHTML = '';
+    btnPedir.disabled = false;
+    btnTerminar.disabled = false;
+});
