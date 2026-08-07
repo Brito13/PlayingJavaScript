@@ -1,16 +1,19 @@
 
-let deck = [];
-let tipos = ['C','D','H','S'];
-let especiales = ['A','J','K','Q']
 
-let ptsJugador = 0;
-let ptsComputadora = 0;
+(() => {
+    'use strict'
+let deck = [];
+const tipos = ['C','D','H','S'],
+      especiales = ['A','J','K','Q'];
+
+let ptsJugador = 0,
+    ptsComputadora = 0;
 
 
 //referencia a botones 
-const btnNuevoJuego = document.querySelector('#nuevo-juego');
-const btnPedir = document.querySelector('#pedir-cartas');
-const btnTerminar = document.querySelector('#Terminar');
+const btnNuevoJuego = document.querySelector('#nuevo-juego'),
+      btnPedir = document.querySelector('#pedir-cartas'),
+      btnTerminar = document.querySelector('#Terminar');
 
 
 // const ptsJugadorHtml = document.querySelector('.pts-jugador');
@@ -18,8 +21,8 @@ const btnTerminar = document.querySelector('#Terminar');
 
 let ptsHtml = document.querySelectorAll('small');
 
-const divCartasJugador = document.querySelector('#cartas-jugador');
-const divCartasComputadora = document.querySelector('#cartas-cpu');
+const divCartasJugador = document.querySelector('#cartas-jugador'),
+      divCartasComputadora = document.querySelector('#cartas-cpu');
 
 function crearDesk(){
 
@@ -38,8 +41,8 @@ function crearDesk(){
    }
 
    //mezclar las cartas
-  deck = _.shuffle(deck);
-  return deck;
+  return _.shuffle(deck);
+  
 }
 
 const getCard = () => {
@@ -165,9 +168,6 @@ btnPedir.addEventListener('click', () =>{
     };
 });
 
-// crearDesk();
-// turnoComputadora(21);
-
 
 
 btnTerminar.addEventListener('click', () => {
@@ -192,3 +192,6 @@ btnNuevoJuego.addEventListener('click', () => {
     btnPedir.disabled = false;
     btnTerminar.disabled = false;
 });
+
+
+})();
