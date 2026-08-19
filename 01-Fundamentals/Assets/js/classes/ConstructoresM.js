@@ -15,7 +15,7 @@ class Persona {
     }
 }
 
-
+//Raidy Papi chulo
 const nombre = 'Raidy',
       apellido = 'Brito',
       pais = 'Dominican Republic';
