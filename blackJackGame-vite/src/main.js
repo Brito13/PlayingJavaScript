@@ -1,4 +1,4 @@
-import {shuffle} from 'underscore';
+import _ from 'underscore';
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import './style.css';
@@ -46,8 +46,14 @@ function crearDesk(){
    }
 
    //mezclar las cartas
-  return shuffle(deck);
+  return _.shuffle(deck);
 }
+
+function startGame(){
+    deck = crearDesk();
+}
+
+startGame();
 
 const getCard = () => {
     let carta;
@@ -74,6 +80,10 @@ function valueCard(carta) {
     return value;
 }
 
+
+
+
+
 // console.log(deck);
 // console.log(getCard());
 // console.log(deck)
@@ -98,7 +108,6 @@ function gameNotification(mensaje,tipo){
             }
         }).showToast();
 
-      Toastify.success('seccess','Ganaste');
     }else if (tipo === 'info'){
         Toastify({
             text: mensaje,
@@ -146,7 +155,7 @@ function turnoComputadora(ptsMinimos){
 
 
 btnPedir.addEventListener('click', () =>{
-  console.log(deck);
+    console.log(deck);
     const carta = getCard();    
     ptsJugador += valueCard(carta);
     ptsHtml[0].innerHTML = ptsJugador;
@@ -177,6 +186,7 @@ btnTerminar.addEventListener('click', () => {
         gameNotification('No puedes terminar sin pedir cartas','error');
         return;
     }else{
+        btnNuevoJuego.disabled = false;
         btnPedir.disabled = true;
         btnTerminar.disabled = true;
         turnoComputadora(ptsJugador);
@@ -184,14 +194,17 @@ btnTerminar.addEventListener('click', () => {
 }); 
 
 btnNuevoJuego.addEventListener('click', () => {
-    deck = crearDesk();
+    deck = [];
+    startGame();
     ptsJugador = 0;
     ptsComputadora = 0;
     ptsHtml[0].innerHTML = ptsJugador;
     ptsHtml[1].innerHTML = ptsComputadora;
     divCartasJugador.innerHTML = '';
     divCartasComputadora.innerHTML = '';
+    btnNuevoJuego.disabled = true;
     btnPedir.disabled = false;
     btnTerminar.disabled = false;
+    
 });
 })();
