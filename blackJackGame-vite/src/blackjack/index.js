@@ -1,10 +1,13 @@
 import Toastify from 'toastify-js';
 import createDeck from './usecases/create-deck.js';
+import getCard from './usecases/get-card.js';
+import valueCard from './usecases/value-card.js';
 import "toastify-js/src/toastify.css";
 
 (() => {
     'use strict'
 let deck = [];
+
 const normalCards = ['C','D','H','S'],
       especialCards = ['A','J','K','Q'];
 
@@ -16,10 +19,6 @@ const btnNuevoJuego = document.querySelector('#nuevo-juego'),
       btnPedir = document.querySelector('#pedir-cartas'),
       btnTerminar = document.querySelector('#Terminar');
 
-
-// const ptsJugadorHtml = document.querySelector('.pts-jugador');
-// const ptsComputadoraHtml = document.querySelector('.pts-computadora');
-
 let ptsHtml = document.querySelectorAll('small');
 
 const divCartasJugador = document.querySelector('#cartas-jugador'),
@@ -28,31 +27,6 @@ const divCartasJugador = document.querySelector('#cartas-jugador'),
 deck = createDeck(normalCards, especialCards);
 
 
-const getCard = () => {
-    let carta;
-    if (deck.length != 0) {
-        carta = deck.pop();
-    }else{
-        console.log('Ya no quedan mas cartas');
-    }
-    return carta;
-}
-
-
-//Continuar
-function valueCard(carta) {
-  let value = carta.substring(0, carta.length -1);
-    if (isNaN(value)) {
-        value = (value === 'A') ? 11 
-        : (value === 'K') ? 10 
-        : (value === 'J') ? 10 
-        : (value === 'Q') ? 10
-        : console.warn('Este valor no es valido');
-    }else{
-        value = value * 1;
-    }
-    return value;
-}
 
 // console.log(deck);
 // console.log(getCard());
@@ -91,7 +65,7 @@ function gameNotification(mensaje,tipo){
 
 function turnoComputadora(ptsMinimos){
     do {
-        const carta = getCard();
+        const carta = getCard(deck);
         ptsComputadora += valueCard(carta);
         ptsHtml[1].innerHTML = ptsComputadora;
 
@@ -119,13 +93,12 @@ function turnoComputadora(ptsMinimos){
     else if (ptsMinimos > ptsComputadora && ptsComputadora < 21) {
         gameNotification('Computadora Gana','success');
     }
-}, 1000);
+    }, 1000);
 }
 
-
 btnPedir.addEventListener('click', () =>{
-  console.log(deck);
-    const carta = getCard();    
+    console.log(deck);
+    const carta = getCard(deck);    
     ptsJugador += valueCard(carta);
     ptsHtml[0].innerHTML = ptsJugador;
 
@@ -148,7 +121,6 @@ btnPedir.addEventListener('click', () =>{
         btnPedir.disabled = true;
         btnTerminar.disabled = true;
         btnNuevoJuego.disabled = false;
-        
     };
 });
 

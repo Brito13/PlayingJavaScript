@@ -9,26 +9,29 @@ import {shuffle } from 'underscore';
 
 
 function createDeck(normalCards, especialCards){
-
-    if(!normalCards || normalCards.length === 0) throw new Error('');
+     if(!normalCards || normalCards.length === 0) 
+        throw new Error('the especialCards and normalCards are required to create the deck');
+    if (!especialCards || especialCards.length == 0){
+        throw new Error('the especialCards and normalCards are required to create the deck');
+    }
 
    let deck = [];
-    //crear cartas normales
+
    for(let i = 2; i < 10;i++){
         for(let cartas of normalCards){
             deck.push(i + cartas);
         }
    }
 
-   //Crear cartas especialCards
+    //Crear cartas especialCards
    for(let tipo of normalCards ){
     for(let especial of especialCards){
         deck.push(especial + tipo);
+        }
     }
-   }
-
+    //crear cartas normales
+   
    //mezclar las cartas
   return shuffle(deck);
 }
-
 export default createDeck;
