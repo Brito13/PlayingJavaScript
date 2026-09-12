@@ -8,10 +8,10 @@
 
 const getCard = (deck) => {
     let carta;
-    if (deck.length != 0) {
-        carta = deck.pop();
-    }else{
-        console.log('Ya no quedan mas cartas');
+    if (!deck || deck.length === 0){ 
+          throw new Error('the deck can not be empty');
+    }else {
+      carta = deck.pop();
     }
     return carta;
 }
