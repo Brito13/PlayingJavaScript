@@ -1,17 +1,15 @@
-import {shuffle} from 'underscore';
-import Toastify from 'toastify-js'
-import "toastify-js/src/toastify.css"
+import Toastify from 'toastify-js';
+import createDeck from './usecases/create-deck.js';
+import "toastify-js/src/toastify.css";
 
 (() => {
     'use strict'
 let deck = [];
-const tipos = ['C','D','H','S'],
-      especiales = ['A','J','K','Q'];
+const normalCards = ['C','D','H','S'],
+      especialCards = ['A','J','K','Q'];
 
 let ptsJugador = 0,
     ptsComputadora = 0;
-
-    console.log('Raidy Brito');
 
 //referencia a botones 
 const btnNuevoJuego = document.querySelector('#nuevo-juego'),
@@ -27,25 +25,8 @@ let ptsHtml = document.querySelectorAll('small');
 const divCartasJugador = document.querySelector('#cartas-jugador'),
       divCartasComputadora = document.querySelector('#cartas-cpu');
 
-function crearDesk(){
+deck = createDeck(normalCards, especialCards);
 
-    //crear cartas normales
-   for(let i = 2; i < 10;i++){
-        for(let cartas of tipos){
-            deck.push(i + cartas);
-        }
-   }
-
-   //Crear cartas especiales
-   for(let tipo of tipos ){
-    for(let especial of especiales){
-        deck.push(especial + tipo);
-    }
-   }
-
-   //mezclar las cartas
-  return shuffle(deck);
-}
 
 const getCard = () => {
     let carta;
@@ -57,7 +38,6 @@ const getCard = () => {
     return carta;
 }
 
-deck = crearDesk();
 
 //Continuar
 function valueCard(carta) {
@@ -97,8 +77,6 @@ function gameNotification(mensaje,tipo){
                 color: "#fff"
             }
         }).showToast();
-
-      Toastify.success('seccess','Ganaste');
     }else if (tipo === 'info'){
         Toastify({
             text: mensaje,
@@ -175,7 +153,6 @@ btnPedir.addEventListener('click', () =>{
 });
 
 
-
 btnTerminar.addEventListener('click', () => {
     if (ptsJugador === 0) {
         gameNotification('No puedes terminar sin pedir cartas','error');
@@ -190,7 +167,7 @@ btnTerminar.addEventListener('click', () => {
 
 btnNuevoJuego.addEventListener('click', () => {
     deck = [];
-    deck = crearDesk();
+    deck = createDeck(normalCards, especialCards);
     btnNuevoJuego.disabled = true;
     ptsJugador = 0;
     ptsComputadora = 0;
