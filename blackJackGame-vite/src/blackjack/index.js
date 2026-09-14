@@ -1,6 +1,4 @@
-import { createDeck,getCard ,valueCard,Toastify } from './usecases/index.js';
-
-
+import {createDeck,getCard ,valueCard,turnoComputadora,gameNotification } from './usecases/index.js';
 
 (() => {
     'use strict'
@@ -26,73 +24,6 @@ deck = createDeck(normalCards, especialCards);
 
 
 
-// console.log(deck);
-// console.log(getCard());
-// console.log(deck)
-
-function gameNotification(mensaje,tipo){
-    if(tipo === 'error'){
-    Toastify({
-            text: mensaje,
-            duration: 3000,
-            style: {
-                background: "#FF0000",
-                color: "#fff"
-            }
-        }).showToast();
-    }else if(tipo === 'success'){
-        Toastify({
-            text: mensaje,
-            duration: 3000,
-            style: {
-                background: "#008000",
-                color: "#fff"
-            }
-        }).showToast();
-    }else if (tipo === 'info'){
-        Toastify({
-            text: mensaje,
-            duration: 3000,
-            style: {
-                background: "#f7de00",
-                color: "#fff"
-            }
-        }).showToast();
-    }
-}
-
-function turnoComputadora(ptsMinimos){
-    do {
-        const carta = getCard(deck);
-        ptsComputadora += valueCard(carta);
-        ptsHtml[1].innerHTML = ptsComputadora;
-
-        const imgCarta = document.createElement('img');
-        imgCarta.classList.add('cartas');
-        imgCarta.src = `/Assets/cartas/${carta}.png`;
-        divCartasComputadora.append(imgCarta);
-    } while (ptsComputadora < ptsMinimos && ptsMinimos <= 21);
-
-    setTimeout(() => {
-    if(ptsComputadora === ptsMinimos){
-        gameNotification('Nadie gana','info');
-    }
-    else if (ptsMinimos > 21) {
-        gameNotification('Computadora Gana','success');
-    }
-    else if (ptsComputadora > 21) {
-        gameNotification('Jugador Gana','success');
-    }
-    else if (ptsComputadora === 21) {
-        gameNotification('Computadora Gana','success');
-    }else if (ptsMinimos < ptsComputadora && ptsComputadora < 21) {
-        gameNotification('Jugador  Gana','success');
-    }
-    else if (ptsMinimos > ptsComputadora && ptsComputadora < 21) {
-        gameNotification('Computadora Gana','success');
-    }
-    }, 1000);
-}
 
 btnPedir.addEventListener('click', () =>{
     console.log(deck);
@@ -108,14 +39,14 @@ btnPedir.addEventListener('click', () =>{
 
     if (ptsJugador > 21) {
         gameNotification('Lo siento mucho, perdiste','error');
-        turnoComputadora(ptsJugador);
+        turnoComputadora(ptsJugador, ptsHtml, deck, divCartasComputadora);
         btnPedir.disabled = true;
         btnTerminar.disabled = true;
         btnNuevoJuego.disabled = false;
         
     } else if (ptsJugador === 21) {
         gameNotification('Felicidades, Ganaste','success');
-        turnoComputadora(ptsJugador);
+        turnoComputadora(ptsJugador, ptsHtml, deck, divCartasComputadora);
         btnPedir.disabled = true;
         btnTerminar.disabled = true;
         btnNuevoJuego.disabled = false;
@@ -131,7 +62,7 @@ btnTerminar.addEventListener('click', () => {
         btnPedir.disabled = true;
         btnTerminar.disabled = true;
         btnNuevoJuego.disabled = false;
-        turnoComputadora(ptsJugador);
+        turnoComputadora(ptsJugador, ptsHtml, deck, divCartasComputadora);
     }
 }); 
 

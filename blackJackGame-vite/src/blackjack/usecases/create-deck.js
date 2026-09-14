@@ -8,7 +8,7 @@ import {shuffle } from 'underscore';
  */
 
 
-function createDeck(normalCards, especialCards){
+ function createDeck(normalCards, especialCards){
      if(!normalCards || normalCards.length === 0) 
         throw new Error('the especialCards and normalCards are required to create the deck');
     if (!especialCards || especialCards.length == 0){
@@ -34,4 +34,4 @@ function createDeck(normalCards, especialCards){
    //mezclar las cartas
   return shuffle(deck);
 }
-export default createDeck;
+ export default createDeck;
