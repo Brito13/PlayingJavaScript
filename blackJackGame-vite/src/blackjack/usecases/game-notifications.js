@@ -1,4 +1,11 @@
 import {Toastify} from './index.js';
+
+
+/**
+ * @param {string} mensaje - The message to be displayed in the notification.
+ * @param {string} tipo - the type of notifications. It can be 'error', 'success', or 'info'.
+*/
+
 function gameNotification(mensaje,tipo){
     if(tipo === 'error'){
     Toastify({

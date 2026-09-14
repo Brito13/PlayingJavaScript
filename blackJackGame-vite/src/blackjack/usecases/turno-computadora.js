@@ -1,10 +1,17 @@
 import {getCard,valueCard,gameNotification} from './index.js';
 
-function turnoComputadora(ptsMinimos, ptsHtml, deck){
-    if (!ptsMinimos || ptsMinimos <= 0) throw new Error('ptsMinimos is required and can not be emty');
 
+/**
+ * 
+ * @param {number} ptsMinimos - what are the minimun point th pc need to win
+ * @param {HTMLElement} ptsHtml - it represents the html elements to display the points
+ * @param {Array<string>} deck - array of cards
+ * @param {HTMLElement} divCartasComputadora - represent the space where we are going to display de cards
+ */
+function turnoComputadora(ptsMinimos, ptsHtml, deck, divCartasComputadora){
+    if (!ptsMinimos || ptsMinimos <= 0) throw new Error('ptsMinimos is required and can not be emty');
     let ptsComputadora = 0;
-    const divCartasComputadora = document.querySelector('#cartas-cpu');
+    
 
     do {
         const carta = getCard(deck);
