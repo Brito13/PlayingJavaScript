@@ -7,7 +7,6 @@
  * @returns {number} value - returns the value of the card
  */
 
-
 function valueCard(card) {
   let value = card.substring(0, card.length -1);
     if (isNaN(value)) {

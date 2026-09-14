@@ -1,6 +1,6 @@
-import { createDeck,getCard ,valueCard } from './usecases/index.js';
-import Toastify from 'toastify-js';
-import "toastify-js/src/toastify.css";
+import { createDeck,getCard ,valueCard,Toastify } from './usecases/index.js';
+
+
 
 (() => {
     'use strict'
