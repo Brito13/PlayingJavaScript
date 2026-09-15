@@ -25,7 +25,6 @@ deck = createDeck(normalCards, especialCards);
 
 
 btnPedir.addEventListener('click', () =>{
-    console.log(deck);
     const carta = getCard(deck);    
     ptsJugador += valueCard(carta);
     ptsHtml[0].innerHTML = ptsJugador;
