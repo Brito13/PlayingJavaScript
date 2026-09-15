@@ -1,4 +1,4 @@
-import {getCard,valueCard,gameNotification} from './index.js';
+import {getCard,valueCard,gameNotification,createCard} from './index.js';
 
 
 /**
@@ -17,11 +17,8 @@ function turnoComputadora(ptsMinimos, ptsHtml, deck, divCartasComputadora){
         const carta = getCard(deck);
         ptsComputadora += valueCard(carta);
         ptsHtml[1].innerHTML = ptsComputadora;
+        divCartasComputadora.append(createCard(carta));
 
-        const imgCarta = document.createElement('img');
-        imgCarta.classList.add('cartas');
-        imgCarta.src = `/Assets/cartas/${carta}.png`;
-        divCartasComputadora.append(imgCarta);
     } while (ptsComputadora < ptsMinimos && ptsMinimos <= 21);
 
     setTimeout(() => {

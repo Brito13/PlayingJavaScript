@@ -1,4 +1,4 @@
-import {createDeck,getCard ,valueCard,turnoComputadora,gameNotification } from './usecases/index.js';
+import {createDeck,getCard ,valueCard,turnoComputadora,gameNotification, createCard } from './usecases/index.js';
 
 (() => {
     'use strict'
@@ -24,18 +24,13 @@ deck = createDeck(normalCards, especialCards);
 
 
 
-
 btnPedir.addEventListener('click', () =>{
     console.log(deck);
     const carta = getCard(deck);    
     ptsJugador += valueCard(carta);
     ptsHtml[0].innerHTML = ptsJugador;
-
-    const imgCarta = document.createElement('img');
-    imgCarta.classList.add('cartas');
-    imgCarta.src = `/Assets/cartas/${carta}.png`;
-
-    divCartasJugador.append(imgCarta);
+    const cardImg = createCard(carta);
+    divCartasJugador.append(cardImg);
 
     if (ptsJugador > 21) {
         gameNotification('Lo siento mucho, perdiste','error');
